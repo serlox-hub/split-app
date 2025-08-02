@@ -1,7 +1,7 @@
 import { supabaseAdmin } from "@/lib/supabaseServer";
 
 export async function GET(request, context) {
-  const { groupId } = context.params;
+  const { groupId } = await context.params;
 
   const { data, error } = await supabaseAdmin
     .from("expenses")
@@ -19,7 +19,7 @@ export async function GET(request, context) {
 }
 
 export async function POST(request, context) {
-  const { groupId } = context.params;
+  const { groupId } = await context.params;
   const { description, amount, paid_by, participants, date } =
     await request.json();
 
