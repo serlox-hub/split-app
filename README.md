@@ -1,36 +1,134 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# SplitApp
 
-## Getting Started
+**SplitApp** is a super-fast, no-login web app for splitting expenses with friends. It's designed to be as simple and frictionless as possible—just create a group, add people, and start tracking who paid and who owes what. No authentication, no accounts—just clean and intuitive expense tracking.
 
-First, run the development server:
+Built with **Next.js**, **React**, and **Supabase**.
+
+## 🚀 How It Works
+
+SplitApp lets you:
+
+- Create a group for your trip, event, or shared expenses
+- Add people to the group
+- Log expenses by indicating who paid and who participated
+- Automatically calculate what each person owes
+
+No sign-up, no login, no fuss.
+
+## 🧱 Tech Stack
+
+- **Next.js** – React-based framework for building fast web apps
+- **Supabase** – Postgres database with real-time and REST APIs
+- **Tailwind CSS** – For fast and modern UI styling
+
+## 🛠️ Local Development
+
+### 1. Prerequisites
+
+Before getting started, make sure you have:
+
+- [Node.js](https://nodejs.org/) installed
+- The [Supabase CLI](https://supabase.com/docs/guides/cli) installed globally or locally
+
+### 2. Clone the Repository
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/serlox-hub/split-app.git
+cd split-app
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 3. Start Supabase Locally
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Supabase is used as the backend and database. To start it locally:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npx supabase start
+```
 
-## Learn More
+This spins up a local Supabase instance with Postgres and the REST API running.
 
-To learn more about Next.js, take a look at the following resources:
+Once it's up, you'll have:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- A local Postgres database
+- Supabase Studio (web UI) at http://localhost:54323
+- API and DB running at http://localhost:54321
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+To apply the schema (tables, relationships), run:
 
-## Deploy on Vercel
+```bash
+npx supabase db reset
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+⚠️ This will drop and recreate your database. Use with caution.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+You can edit the schema in supabase/migrations/ or use Supabase Studio.
+
+### 4. Configure Environment Variables
+
+Create a .env.local file based on .env.example:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=http://localhost:54321
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-local-anon-key
+```
+
+Get the local anon key by running:
+
+```bash
+npx supabase status
+```
+
+Look under anon key in the output.
+
+### 5. Start the App
+
+```bash
+npm install
+npm run dev
+```
+
+Visit http://localhost:3000 to see SplitApp in action.
+
+## 🏗️ Building for Production
+
+To create a production build:
+
+```bash
+npm run build
+```
+
+Then start it with:
+
+```bash
+npm start
+```
+
+The optimized app will be served from the .next folder.
+
+## 🚀 Deployment
+
+SplitApp can be deployed to any Node.js-compatible platform like Vercel, Netlify, or AWS.
+
+Make sure to configure your environment variables in your deployment platform:
+
+NEXT_PUBLIC_SUPABASE_URL
+
+NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+For production, you can connect to your hosted Supabase project instead of running it locally.
+
+## 🤝 Contributing
+
+Contributions are welcome! To contribute:
+
+Fork the repository
+
+Create a new branch
+
+Make your changes
+
+Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License.
