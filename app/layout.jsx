@@ -1,17 +1,11 @@
-import "./globals.css";
+import { Provider } from "@/components/ui/provider";
 
-export const metadata = {
-  title: "SplitApp",
-};
-
-export default function RootLayout({ children }) {
+export default function RootLayout(props) {
+  const { children } = props;
   return (
-    <html lang="es">
-      <body className="min-h-screen flex flex-col">
-        <header className="bg-white shadow p-4">
-          <h1 className="text-xl font-semibold">SplitApp</h1>
-        </header>
-        <main className="flex-1 container mx-auto p-4">{children}</main>
+    <html suppressHydrationWarning>
+      <body>
+        <Provider>{children}</Provider>
       </body>
     </html>
   );
