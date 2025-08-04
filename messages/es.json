@@ -1,6 +1,8 @@
 {
-  "HomePage": {
-    "title": "Hello world!",
-    "about": "Go to the about page"
+  "home": {
+    "welcome": "¡Bienvenido a SplitApp!",
+    "askName": "¿Cómo te llamas?",
+    "placeholder": "Tu nombre",
+    "continue": "Continuar"
   }
 }

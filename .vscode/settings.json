@@ -12,5 +12,31 @@
   },
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "files.autoSave": "onWindowChange"
+  "files.autoSave": "onWindowChange",
+  "folder-color.pathColors": [
+    {
+      "folderPath": "split-app/messages/",
+      "color": "foldercolorizer.color_cccc33",
+      "badge": "💬"
+    },
+    {
+      "folderPath": "split-app/lib/",
+      "color": "foldercolorizer.color_ff6699",
+      "badge": "💼"
+    },
+    {
+      "folderPath": "split-app/components/",
+      "color": "foldercolorizer.color_cc6600",
+      "badge": "📐"
+    },
+    {
+      "folderPath": "split-app/app/",
+      "color": "foldercolorizer.color_00cccc",
+      "badge": "🅰️"
+    },
+    {
+      "folderPath": "split-app/app/api/groups/",
+      "color": "foldercolorizer.color_0099ff"
+    }
+  ]
 }
