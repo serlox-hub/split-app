@@ -35,8 +35,13 @@
       "badge": "🅰️"
     },
     {
-      "folderPath": "split-app/app/api/groups/",
-      "color": "foldercolorizer.color_0099ff"
+      "folderPath": "split-app/hooks/",
+      "color": "foldercolorizer.color_666699",
+      "badge": "🗜️"
+    },
+    {
+      "folderPath": "split-app/app/api/",
+      "color": "foldercolorizer.color_0066ff"
     }
   ]
 }

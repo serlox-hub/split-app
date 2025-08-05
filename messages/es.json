@@ -1,8 +1,25 @@
 {
   "home": {
-    "welcome": "¡Bienvenido a SplitApp!",
-    "askName": "¿Cómo te llamas?",
-    "placeholder": "Tu nombre",
-    "continue": "Continuar"
+    "welcome": "Bienvenido a {name}",
+    "description": "Gestiona fácilmente los gastos en grupo, sin registros ni complicaciones.",
+    "getStarted": "Empezar",
+    "placeholder": "Introduce tu nombre",
+    "welcomeBack": "¡Bienvenido, {name}!",
+    "errorCreatingPerson": "Error al crear la persona. Por favor, inténtalo de nuevo.",
+    "redirectDescription": "Serás redirigido a tus grupos."
+  },
+  "app": {
+    "name": "Split App",
+    "hello": "Hola, {name}",
+    "editName": "Editar nombre",
+    "editYourName": "Edita tu nombre",
+    "namePlaceholder": "Introduce tu nombre",
+    "cancel": "Cancelar",
+    "save": "Guardar"
+  },
+  "groups": {
+    "namePlaceholder": "Introduce tu nombre",
+    "yourGroups": "Tus grupos",
+    "join": "Unirse"
   }
 }

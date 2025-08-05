@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Input, Button, Dialog, Portal, useDisclosure } from "@chakra-ui/react";
 import { LuPlus } from "react-icons/lu";
-import { getOrCreateUserId } from "@/lib/userUtils";
+import { getUserId } from "@/lib/userUtils";
 
 export function CreateGroupBarAction({ onGroupCreated }) {
   const { open, onOpen, onClose } = useDisclosure();
@@ -14,7 +14,7 @@ export function CreateGroupBarAction({ onGroupCreated }) {
     const trimmedName = groupName.trim();
     if (!trimmedName) return;
 
-    const userId = getOrCreateUserId();
+    const userId = getUserId();
     setLoading(true);
     const res = await fetch("/api/groups", {
       method: "POST",

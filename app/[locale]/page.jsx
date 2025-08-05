@@ -1,77 +1,38 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import {
-  Box,
-  VStack,
-  Heading,
-  Text,
-  Input,
-  Button,
-  Spinner,
-} from "@chakra-ui/react";
+import { Box, VStack, Heading, Text, Image } from "@chakra-ui/react";
 import { useTranslations } from "next-intl";
-import { getUserName, setUserName } from "@/lib/userUtils";
+import { OnboardingForm } from "@/components/home/OnboardingForm";
+import { APP_NAME } from "@/lib/constants";
 
 export default function HomePage() {
   const t = useTranslations("home");
-  const router = useRouter();
-
-  const [name, setName] = useState("");
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const storedName = getUserName();
-
-    if (storedName) {
-      router.replace("/groups");
-    } else {
-      setLoading(false);
-    }
-  }, [router]);
-
-  const handleSubmit = () => {
-    const trimmedName = name.trim();
-    if (trimmedName) {
-      setUserName(trimmedName);
-      router.push("/groups");
-    }
-  };
-
-  if (loading) {
-    return (
-      <Box
-        minH="100vh"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Spinner size="xl" />
-      </Box>
-    );
-  }
 
   return (
     <Box
+      as="main"
       minH="100vh"
       display="flex"
       alignItems="center"
       justifyContent="center"
       p={6}
     >
-      <VStack spacing={4} maxW="md" w="full" textAlign="center">
-        <Heading>{t("welcome")}</Heading>
-        <Text>{t("askName")}</Text>
-        <Input
-          placeholder={t("placeholder")}
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          size="md"
+      <VStack spacing={6} maxW="xl" textAlign="center" w="full">
+        <Image
+          src="/logo.png"
+          alt={`${APP_NAME} logo`}
+          width={120}
+          height={120}
+          style={{ objectFit: "contain" }}
+          priority
         />
-        <Button colorScheme="primary" w="full" onClick={handleSubmit}>
-          {t("continue")}
-        </Button>
+
+        <Heading as="h1" fontSize="4xl">
+          {t("welcome", { name: APP_NAME })}
+        </Heading>
+        <Text fontSize="lg" color="gray.600" marginBottom={6}>
+          {t("description")}
+        </Text>
+
+        <OnboardingForm />
       </VStack>
     </Box>
   );
