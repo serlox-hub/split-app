@@ -9,26 +9,21 @@ import { FiEdit2 } from "react-icons/fi";
 import { toaster } from "../ui/toaster";
 import { getColorFromString } from "@/lib/util/colorUtils";
 import { OneInputDialog } from "../dialogs/OneInputDialog";
+import { showUnexpectedErrorToast } from "@/lib/util/toastUtils";
 
 export default function AppBar() {
-  const t = useTranslations("app");
+  const t = useTranslations();
   const [name, setName] = useState("");
   const [hovering, setHovering] = useState(false);
   useEffect(() => {
     const fetchPerson = async () => {
-      const response = await getPersonByUserId(getUserId());
-      console.log("Fetched person:", response);
-      if (!response.success) {
-        queueMicrotask(() => {
-          toaster.create({
-            title: t("errorFetchingPerson"),
-            variant: "error",
-          });
-        });
-        return;
-      }
+      const userId = getUserId();
+      if (!userId) return; // Automatically redirected to home if no userId
 
-      const person = response.data;
+      const result = await getPersonByUserId(userId);
+      if (!result.success) return showUnexpectedErrorToast(t);
+
+      const person = result?.data;
       setName(person.name);
     };
 
@@ -39,7 +34,7 @@ export default function AppBar() {
     const response = await updatePerson(getUserId(), value);
     if (response.success) {
       toaster.create({
-        title: t("nameUpdated"),
+        title: t("app.nameUpdated"),
         variant: "success",
       });
     }
@@ -60,12 +55,12 @@ export default function AppBar() {
     >
       <Flex align="center">
         <Heading color={"blackAlpha.900"} size="xl" fontWeight="bold">
-          {t("name")}
+          {t("app.name")}
         </Heading>
         <Spacer />
         <OneInputDialog
-          title={t("editYourName")}
-          placeholder={t("namePlaceholder")}
+          title={t("app.editYourName")}
+          placeholder={t("app.namePlaceholder")}
           defaultValue={name}
           onSubmit={handleSave}
           trigger={
