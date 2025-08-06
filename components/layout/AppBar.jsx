@@ -1,34 +1,22 @@
 "use client";
 
-import { getPersonByUserId, updatePerson } from "@/lib/api/persons";
+import { updatePerson } from "@/lib/api/persons";
 import { getUserId } from "@/lib/util/userUtils";
 import { Box, Flex, Heading, Avatar, Spacer, Float } from "@chakra-ui/react";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FiEdit2 } from "react-icons/fi";
 import { toaster } from "../ui/toaster";
 import { getColorFromString } from "@/lib/util/colorUtils";
 import { OneInputDialog } from "../dialogs/OneInputDialog";
-import { showUnexpectedErrorToast } from "@/lib/util/toastUtils";
+import { useUser } from "../providers/UserProvider";
 
 export default function AppBar() {
   const t = useTranslations();
-  const [name, setName] = useState("");
+  const { user, setUser } = useUser();
   const [hovering, setHovering] = useState(false);
-  useEffect(() => {
-    const fetchPerson = async () => {
-      const userId = getUserId();
-      if (!userId) return; // Automatically redirected to home if no userId
 
-      const result = await getPersonByUserId(userId);
-      if (!result.success) return showUnexpectedErrorToast(t);
-
-      const person = result?.data;
-      setName(person.name);
-    };
-
-    fetchPerson();
-  }, [t]);
+  const name = user?.name || "";
 
   const handleSave = async (value) => {
     const response = await updatePerson(getUserId(), value);
@@ -38,7 +26,7 @@ export default function AppBar() {
         variant: "success",
       });
     }
-    setName(value);
+    setUser(value);
     return response.success;
   };
 
