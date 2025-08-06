@@ -12,19 +12,12 @@
     "getStarted": "Get Started",
     "placeholder": "Enter your name",
     "welcomeBack": "Welcome back, {name}!",
-    "errorCreatingPerson": "Error creating person. Please try again.",
     "redirectDescription": "You will be redirected to your groups."
   },
-  "app": {
-    "name": "Split App",
-    "hello": "Hello, {name}",
+  "appBar": {
     "editName": "Edit name",
-    "editYourName": "Edit your name",
     "namePlaceholder": "Enter your name",
-    "cancel": "Cancel",
-    "save": "Save",
-    "nameUpdated": "Name updated successfully",
-    "errorFetchingPerson": "Error fetching user. Please try again."
+    "nameUpdated": "Name updated successfully"
   },
   "groups": {
     "namePlaceholder": "Enter your name",

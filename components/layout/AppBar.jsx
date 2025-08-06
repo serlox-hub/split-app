@@ -10,6 +10,8 @@ import { toaster } from "../ui/toaster";
 import { getColorFromString } from "@/lib/util/colorUtils";
 import { OneInputDialog } from "../dialogs/OneInputDialog";
 import { useUser } from "../providers/UserProvider";
+import { showUnexpectedErrorToast } from "@/lib/util/toastUtils";
+import { APP_NAME } from "@/lib/constants";
 
 export default function AppBar() {
   const t = useTranslations();
@@ -19,15 +21,17 @@ export default function AppBar() {
   const name = user?.name || "";
 
   const handleSave = async (value) => {
-    const response = await updatePerson(getUserId(), value);
-    if (response.success) {
+    const result = await updatePerson(getUserId(), value);
+    if (!result.success) {
+      showUnexpectedErrorToast(t);
+    } else {
+      setUser({ ...user, name: value });
       toaster.create({
-        title: t("app.nameUpdated"),
+        title: t("appBar.nameUpdated"),
         variant: "success",
       });
     }
-    setUser(value);
-    return response.success;
+    return result.success;
   };
 
   return (
@@ -43,12 +47,12 @@ export default function AppBar() {
     >
       <Flex align="center">
         <Heading color={"blackAlpha.900"} size="xl" fontWeight="bold">
-          {t("app.name")}
+          {APP_NAME}
         </Heading>
         <Spacer />
         <OneInputDialog
-          title={t("app.editYourName")}
-          placeholder={t("app.namePlaceholder")}
+          title={t("appBar.editYourName")}
+          placeholder={t("appBar.namePlaceholder")}
           defaultValue={name}
           onSubmit={handleSave}
           trigger={

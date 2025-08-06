@@ -28,22 +28,16 @@ export function OneInputDialog({
   const handleSubmit = async () => {
     const trimmedValue = inputValue.trim();
     setErrorMsg(!trimmedValue ? t("required") : "");
-
     if (!trimmedValue) return;
 
     setLoading(true);
-    try {
-      const success = await onSubmit(trimmedValue);
-      if (!success) {
-        setErrorMsg(t("submissionError"));
-        return;
-      }
-      onClose();
-    } catch (error) {
-      console.error("Error submitting input:", error);
-    } finally {
-      setLoading(false);
+    const success = await onSubmit(trimmedValue);
+    if (!success) {
+      setErrorMsg(t("submissionError"));
+      return;
     }
+    onClose();
+    setLoading(false);
   };
 
   const handleInputChange = (e) => {
