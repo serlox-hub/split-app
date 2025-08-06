@@ -49,18 +49,16 @@ export default function AppBar() {
   return (
     <Box
       as="header"
-      bg="gray.50"
+      bg="brand.500"
       px={6}
       py={4}
-      borderBottom="1px solid"
-      borderColor="gray.200"
       w="100%"
       position="sticky"
       top="0"
       zIndex="1000"
     >
       <Flex align="center">
-        <Heading color={avatarBg} size="md">
+        <Heading color={"blackAlpha.900"} size="xl" fontWeight="bold">
           {t("name")}
         </Heading>
         <Spacer />
