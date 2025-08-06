@@ -41,7 +41,7 @@ export function OnboardingForm() {
   };
 
   if (checking) {
-    return <Spinner size="md" color={"#54c1be"} />;
+    return <Spinner size="md" color={"brand.500"} />;
   }
 
   return (
