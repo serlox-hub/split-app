@@ -81,52 +81,11 @@ export default function GroupsPage() {
   return (
     <Box minH="100vh" px={6} pt={4} pb={20} maxW="lg" mx="auto">
       <VStack spacing={6} align="stretch">
-        <Box>
-          <Heading size="lg">{appT("name")}</Heading>
-
-          {/* Gestión del nombre */}
-          {username && !editing ? (
-            <HStack mt={2}>
-              <Text fontSize="md" color="gray.600">
-                {appT("hello", { name: username })}
-              </Text>
-              <Button
-                size="sm"
-                aria-label="Editar nombre"
-                variant={"ghost"}
-                onClick={() => {
-                  setTempName(username);
-                  setEditing(true);
-                }}
-              >
-                <TbEdit />
-              </Button>
-            </HStack>
-          ) : (
-            <HStack mt={2}>
-              <Input
-                size="sm"
-                placeholder={t("namePlaceholder")}
-                value={tempName}
-                onChange={(e) => setTempName(e.target.value)}
-              />
-              <Button size="sm" aria-label="Guardar" onClick={handleSaveName}>
-                <TbCheck />
-              </Button>
-            </HStack>
-          )}
-        </Box>
-
-        {/* Mostrar grupos solo si hay nombre */}
-        {username && <GroupList groups={groups} />}
+        <GroupList groups={groups} />
       </VStack>
-
-      {/* Mostrar acciones solo si hay nombre */}
-      {username && (
-        <GroupActions
-          onGroupCreated={(group) => setGroups((prev) => [...prev, group])}
-        />
-      )}
+      <GroupActions
+        onGroupCreated={(group) => setGroups((prev) => [...prev, group])}
+      />
     </Box>
   );
 }
