@@ -17,12 +17,12 @@ export default function AppBar() {
   useEffect(() => {
     const fetchPerson = async () => {
       const response = await getPersonByUserId(getUserId());
-
+      console.log("Fetched person:", response);
       if (!response.success) {
         queueMicrotask(() => {
           toaster.create({
             title: t("errorFetchingPerson"),
-            variant: "destructive",
+            variant: "error",
           });
         });
         return;

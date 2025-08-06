@@ -3,7 +3,8 @@
     "submit": "Submit",
     "cancel": "Cancel",
     "required": "This field is required",
-    "submissionError": "Error submitting. Please try again."
+    "submissionError": "Error submitting. Please try again.",
+    "unexpectedError": "An unexpected error has occurred."
   },
   "home": {
     "welcome": "Welcome to {name}",

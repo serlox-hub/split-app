@@ -1,43 +1,46 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Input, Button, VStack, Spinner } from "@chakra-ui/react";
+import { Input, Button, VStack, Spinner, Field } from "@chakra-ui/react";
 import { toaster } from "@/components/ui/toaster";
 import { useTranslations } from "next-intl";
 import { useRedirectIfUserIdExists } from "@/hooks/useRedirectIfUserIdExists";
 import { createPerson } from "@/lib/api/persons";
+import { showUnexpectedErrorToast } from "@/lib/util/toastUtils";
+import { ROUTES } from "@/lib/constants";
 
 export function OnboardingForm() {
   const [name, setName] = useState("");
   const [checking, setChecking] = useState(true);
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
-  const t = useTranslations("home");
+  const [invalid, setInvalid] = useState(false);
+  const t = useTranslations();
 
-  useRedirectIfUserIdExists("/groups", () => setChecking(false));
+  useRedirectIfUserIdExists(ROUTES.GROUPS, () => setChecking(false));
 
   const handleSubmit = async (event) => {
     event?.preventDefault();
     const trimmed = name.trim();
+    setInvalid(!trimmed);
     if (!trimmed) return;
 
     setLoading(true);
-    const response = await createPerson(trimmed);
+    const result = await createPerson(trimmed);
     setLoading(false);
-    if (!response.success) {
-      toaster.create({
-        title: t("errorCreatingPerson"),
-        variant: "destructive",
-      });
-      return;
-    } else {
-      toaster.create({
-        title: t("welcome", { name: trimmed }),
-        description: t("redirectDescription"),
-      });
-      router.push("/groups");
-    }
+
+    if (!result.success) return showUnexpectedErrorToast(t);
+
+    // Automatically redirect to the groups page with useRedirectIfUserIdExists
+    toaster.create({
+      title: t("home.welcomeBack", { name: trimmed }),
+      description: t("home.redirectDescription"),
+    });
+  };
+
+  const handleInputChange = (event) => {
+    const value = event.target.value;
+    setName(value);
+    setInvalid(false);
   };
 
   if (checking) {
@@ -54,12 +57,15 @@ export function OnboardingForm() {
       }}
     >
       <VStack spacing={4} w="full" maxW="md">
-        <Input
-          placeholder={t("placeholder")}
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          mb={1}
-        />
+        <Field.Root invalid={invalid}>
+          <Input
+            placeholder={t("home.placeholder")}
+            value={name}
+            onChange={handleInputChange}
+            mb={1}
+          />
+          <Field.ErrorText>{t("common.required")}</Field.ErrorText>
+        </Field.Root>
         <Button
           loading={loading}
           colorScheme="primary"
@@ -69,7 +75,7 @@ export function OnboardingForm() {
           type="submit"
           isDisabled={!name.trim()}
         >
-          {t("getStarted")}
+          {t("home.getStarted")}
         </Button>
       </VStack>
     </form>
