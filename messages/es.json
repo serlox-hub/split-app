@@ -12,19 +12,12 @@
     "getStarted": "Empezar",
     "placeholder": "Introduce tu nombre",
     "welcomeBack": "¡Bienvenido, {name}!",
-    "errorCreatingPerson": "Error al crear la persona. Por favor, inténtalo de nuevo.",
     "redirectDescription": "Serás redirigido a tus grupos."
   },
   "app": {
-    "name": "Split App",
-    "hello": "Hola, {name}",
-    "editName": "Editar nombre",
     "editYourName": "Edita tu nombre",
     "namePlaceholder": "Introduce tu nombre",
-    "cancel": "Cancelar",
-    "save": "Guardar",
-    "nameUpdated": "Nombre actualizado correctamente",
-    "errorFetchingPerson": "Error al obtener el usuario. Por favor, inténtalo de nuevo."
+    "nameUpdated": "Nombre actualizado correctamente"
   },
   "groups": {
     "namePlaceholder": "Introduce tu nombre",
