@@ -1,4 +1,10 @@
 {
+  "common": {
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "required": "This field is required",
+    "submissionError": "Error submitting. Please try again."
+  },
   "home": {
     "welcome": "Welcome to {name}",
     "description": "Easily manage group expenses, no records or hassle.",
@@ -15,7 +21,9 @@
     "editYourName": "Edit your name",
     "namePlaceholder": "Enter your name",
     "cancel": "Cancel",
-    "save": "Save"
+    "save": "Save",
+    "nameUpdated": "Name updated successfully",
+    "errorFetchingPerson": "Error fetching user. Please try again."
   },
   "groups": {
     "namePlaceholder": "Enter your name",

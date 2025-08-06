@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { getUserId } from "@/lib/userUtils";
+import { getUserId } from "@/lib/util/userUtils";
 
 export function useRequireUserId(redirectTo = "/") {
   const router = useRouter();

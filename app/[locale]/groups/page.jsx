@@ -14,7 +14,7 @@ import {
 import { useTranslations } from "next-intl";
 import { TbEdit, TbCheck } from "react-icons/tb";
 
-import { getUserId } from "@/lib/userUtils";
+import { getUserId } from "@/lib/util/userUtils";
 import GroupList from "@/components/groups/GroupList";
 import GroupActions from "@/components/groups/GroupActions";
 

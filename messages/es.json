@@ -1,4 +1,10 @@
 {
+  "common": {
+    "submit": "Enviar",
+    "cancel": "Cancelar",
+    "required": "Este campo es obligatorio",
+    "submissionError": "Error al enviar. Por favor, inténtalo de nuevo."
+  },
   "home": {
     "welcome": "Bienvenido a {name}",
     "description": "Gestiona fácilmente los gastos en grupo, sin registros ni complicaciones.",
@@ -15,7 +21,9 @@
     "editYourName": "Edita tu nombre",
     "namePlaceholder": "Introduce tu nombre",
     "cancel": "Cancelar",
-    "save": "Guardar"
+    "save": "Guardar",
+    "nameUpdated": "Nombre actualizado correctamente",
+    "errorFetchingPerson": "Error al obtener el usuario. Por favor, inténtalo de nuevo."
   },
   "groups": {
     "namePlaceholder": "Introduce tu nombre",

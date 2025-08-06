@@ -1,49 +1,53 @@
 "use client";
 
-import {
-  Box,
-  Flex,
-  Heading,
-  Avatar,
-  Spacer,
-  Input,
-  Button,
-  HStack,
-  Text,
-  Dialog,
-  Float,
-} from "@chakra-ui/react";
+import { getPersonByUserId, updatePerson } from "@/lib/api/persons";
+import { getUserId } from "@/lib/util/userUtils";
+import { Box, Flex, Heading, Avatar, Spacer, Float } from "@chakra-ui/react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { FiEdit2 } from "react-icons/fi";
+import { toaster } from "../ui/toaster";
+import { getColorFromString } from "@/lib/util/colorUtils";
+import { OneInputDialog } from "../dialogs/OneInputDialog";
 
 export default function AppBar() {
   const t = useTranslations("app");
   const [name, setName] = useState("");
-  const [inputName, setInputName] = useState("");
   const [hovering, setHovering] = useState(false);
-
   useEffect(() => {
-    const stored = "getUserName()"; // Replace with actual function to get stored name
-    if (stored) setName(stored);
-    // else open dialog to set name
-  }, []);
+    const fetchPerson = async () => {
+      const response = await getPersonByUserId(getUserId());
 
-  function stringToColor(str) {
-    let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-      hash = str.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    return `hsl(${hash % 360}, 60%, 60%)`;
-  }
+      if (!response.success) {
+        queueMicrotask(() => {
+          toaster.create({
+            title: t("errorFetchingPerson"),
+            variant: "destructive",
+          });
+        });
+        return;
+      }
 
-  const avatarBg = stringToColor(name);
+      const person = response.data;
+      setName(person.name);
+    };
 
-  const handleSave = () => {
-    const trimmed = inputName.trim();
+    fetchPerson();
+  }, [t]);
+
+  const handleSave = async (value) => {
+    const trimmed = value.trim();
     if (!trimmed) return;
-    //setUserName(trimmed); // Replace with actual function to save name
+    const response = await updatePerson(getUserId(), trimmed);
+    console.error("Error updating person:", response);
+    if (response.success) {
+      toaster.create({
+        title: t("nameUpdated"),
+        variant: "success",
+      });
+    }
     setName(trimmed);
+    return response.success;
   };
 
   return (
@@ -62,54 +66,27 @@ export default function AppBar() {
           {t("name")}
         </Heading>
         <Spacer />
-
-        <Dialog.Root>
-          <Dialog.Trigger asChild>
-            <Box
-              position="relative"
-              cursor="pointer"
+        <OneInputDialog
+          title={t("editYourName")}
+          placeholder={t("namePlaceholder")}
+          defaultValue={name}
+          onSubmit={handleSave}
+          trigger={
+            <Avatar.Root
+              colorPalette={getColorFromString(name)}
+              size="md"
               onMouseEnter={() => setHovering(true)}
               onMouseLeave={() => setHovering(false)}
             >
-              <Avatar.Root colorpalette={avatarBg} size="md">
-                <Avatar.Fallback name={hovering ? " " : name} />
-                {hovering && (
-                  <Float placement="center" offsetX="1" offsetY="1">
-                    <FiEdit2 />
-                  </Float>
-                )}
-              </Avatar.Root>
-            </Box>
-          </Dialog.Trigger>
-
-          <Dialog.Backdrop />
-          <Dialog.Positioner>
-            <Dialog.Content>
-              <Dialog.Title>{t("editYourName")}</Dialog.Title>
-              <Dialog.Description>
-                <Text mb={2}>{t("namePlaceholder")}</Text>
-              </Dialog.Description>
-
-              <Input
-                value={inputName}
-                onChange={(e) => setInputName(e.target.value)}
-                placeholder={t("namePlaceholder")}
-                mb={4}
-              />
-
-              <HStack justify="flex-end">
-                <Dialog.CloseTrigger asChild>
-                  <Button variant="ghost">{t("cancel")}</Button>
-                </Dialog.CloseTrigger>
-                <Dialog.CloseTrigger asChild>
-                  <Button colorScheme="primary" onClick={handleSave}>
-                    {t("save")}
-                  </Button>
-                </Dialog.CloseTrigger>
-              </HStack>
-            </Dialog.Content>
-          </Dialog.Positioner>
-        </Dialog.Root>
+              <Avatar.Fallback name={hovering ? " " : name} />
+              {hovering && (
+                <Float placement="center" offsetX="1" offsetY="1">
+                  <FiEdit2 />
+                </Float>
+              )}
+            </Avatar.Root>
+          }
+        />
       </Flex>
     </Box>
   );

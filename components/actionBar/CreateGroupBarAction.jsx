@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Input, Button, Dialog, Portal, useDisclosure } from "@chakra-ui/react";
 import { LuPlus } from "react-icons/lu";
-import { getUserId } from "@/lib/userUtils";
+import { getUserId } from "@/lib/util/userUtils";
 
 export function CreateGroupBarAction({ onGroupCreated }) {
   const { open, onOpen, onClose } = useDisclosure();
@@ -37,7 +37,6 @@ export function CreateGroupBarAction({ onGroupCreated }) {
     setGroupName("");
     onOpen();
   };
-  console.log("Loading state:", loading);
   return (
     <Dialog.Root placement="center" open={open}>
       <Dialog.Trigger asChild>
