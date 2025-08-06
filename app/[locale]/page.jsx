@@ -4,7 +4,7 @@ import { OnboardingForm } from "@/components/home/OnboardingForm";
 import { APP_NAME } from "@/lib/constants";
 
 export default function HomePage() {
-  const t = useTranslations("home");
+  const t = useTranslations();
 
   return (
     <Box
@@ -26,10 +26,10 @@ export default function HomePage() {
         />
 
         <Heading as="h1" fontSize="4xl">
-          {t("welcome", { name: APP_NAME })}
+          {t("home.welcome", { name: APP_NAME })}
         </Heading>
         <Text fontSize="lg" color="gray.600" marginBottom={6}>
-          {t("description")}
+          {t("home.description")}
         </Text>
 
         <OnboardingForm />
