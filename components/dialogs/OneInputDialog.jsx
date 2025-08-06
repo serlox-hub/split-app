@@ -87,7 +87,12 @@ export function OneInputDialog({
               <Button size="sm" variant="secondary" onClick={onClose}>
                 {leftButtonText ?? t("cancel")}
               </Button>
-              <Button size="sm" isLoading={loading} onClick={handleSubmit}>
+              <Button
+                size="sm"
+                loading={loading}
+                onClick={handleSubmit}
+                disabled={defaultValue === inputValue}
+              >
                 {rightButtonText ?? t("submit")}
               </Button>
             </Dialog.Footer>

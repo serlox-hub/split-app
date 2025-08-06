@@ -36,17 +36,14 @@ export default function AppBar() {
   }, [t]);
 
   const handleSave = async (value) => {
-    const trimmed = value.trim();
-    if (!trimmed) return;
-    const response = await updatePerson(getUserId(), trimmed);
-    console.error("Error updating person:", response);
+    const response = await updatePerson(getUserId(), value);
     if (response.success) {
       toaster.create({
         title: t("nameUpdated"),
         variant: "success",
       });
     }
-    setName(trimmed);
+    setName(value);
     return response.success;
   };
 
