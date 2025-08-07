@@ -1,7 +1,8 @@
 import { supabaseAdmin } from "@/lib/supabaseServer";
+import { getUserCookie } from "@/lib/util/serverApiUtils";
 
-export async function GET(request) {
-  const userId = request.headers.get("x-user-id");
+export async function GET() {
+  const userId = await getUserCookie();
 
   if (!userId) {
     return new Response(JSON.stringify({ error: "Missing userId" }), {
@@ -12,7 +13,7 @@ export async function GET(request) {
   const { data: person, error: personError } = await supabaseAdmin
     .from("persons")
     .select("id")
-    .eq("user_id", userId)
+    .eq("id", userId)
     .single();
 
   if (personError || !person) {
@@ -64,7 +65,7 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
-  const userId = request.headers.get("x-user-id");
+  const userId = await getUserCookie();
   const { name } = await request.json();
 
   if (!userId || !name) {
@@ -77,7 +78,7 @@ export async function POST(request) {
   const { data: person, error: personError } = await supabaseAdmin
     .from("persons")
     .select("id")
-    .eq("user_id", userId)
+    .eq("id", userId)
     .single();
 
   if (personError || !person) {
@@ -116,7 +117,7 @@ export async function POST(request) {
 
 export async function DELETE(request, { params }) {
   const groupId = params?.id;
-  const userId = request.headers.get("x-user-id");
+  const userId = await getUserCookie();
 
   if (!userId || !groupId) {
     return new Response(
