@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Box, VStack } from "@chakra-ui/react";
 
 import GroupList from "@/components/groups/GroupList";
 import GroupActions from "@/components/groups/GroupActions";
-import { useUser } from "@/components/providers/UserProvider";
 import { getUserGroups } from "@/lib/api/groups";
 import { showUnexpectedErrorToast } from "@/lib/util/toastUtils";
 import { useTranslations } from "next-intl";
@@ -13,23 +12,20 @@ import { Spinner } from "@/components/Spinner";
 
 export default function GroupsPage() {
   const t = useTranslations();
-  const { user } = useUser();
   const [loading, setLoading] = useState(true);
   const [groups, setGroups] = useState([]);
-  const userId = user?.user_id ?? null;
 
-  const fetchGroups = async () => {
+  const fetchGroups = useCallback(async () => {
     setLoading(true);
-    const result = await getUserGroups(userId);
+    const result = await getUserGroups();
     setLoading(false);
     if (!result.success) return showUnexpectedErrorToast(t);
     setGroups(result.data || []);
-  };
+  }, [t]);
 
   useEffect(() => {
-    if (!userId) return;
     fetchGroups();
-  }, [t, userId]);
+  }, [fetchGroups]);
 
   if (loading) {
     return (

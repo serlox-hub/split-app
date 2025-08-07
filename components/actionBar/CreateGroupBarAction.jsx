@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { Input, Button, Dialog, Portal, useDisclosure } from "@chakra-ui/react";
 import { LuPlus } from "react-icons/lu";
-import { getUserId } from "@/lib/util/userUtils";
 import { createGroup } from "@/lib/api/groups";
 import { showUnexpectedErrorToast } from "@/lib/util/toastUtils";
 import { useTranslations } from "next-intl";
@@ -18,9 +17,8 @@ export function CreateGroupBarAction({ onGroupCreated }) {
     const trimmedName = groupName.trim();
     if (!trimmedName) return;
 
-    const userId = getUserId();
     setLoading(true);
-    const result = await createGroup(userId, trimmedName);
+    const result = await createGroup(trimmedName);
     setLoading(false);
 
     if (!result.success) return showUnexpectedErrorToast(t);

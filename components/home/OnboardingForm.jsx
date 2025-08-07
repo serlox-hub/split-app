@@ -4,20 +4,17 @@ import { useState } from "react";
 import { Input, Button, VStack, Field } from "@chakra-ui/react";
 import { toaster } from "@/components/ui/toaster";
 import { useTranslations } from "next-intl";
-import { useRedirectIfUserIdExists } from "@/hooks/useRedirectIfUserIdExists";
-import { createPerson } from "@/lib/api/persons";
+import { createUser } from "@/lib/api/users";
 import { showUnexpectedErrorToast } from "@/lib/util/toastUtils";
+import { useRouter } from "next/navigation";
 import { ROUTES } from "@/lib/constants";
-import { Spinner } from "@/components/Spinner";
 
 export function OnboardingForm() {
+  const router = useRouter();
   const [name, setName] = useState("");
-  const [checking, setChecking] = useState(true);
   const [loading, setLoading] = useState(false);
   const [invalid, setInvalid] = useState(false);
   const t = useTranslations();
-
-  useRedirectIfUserIdExists(ROUTES.GROUPS, () => setChecking(false));
 
   const handleSubmit = async (event) => {
     event?.preventDefault();
@@ -26,16 +23,17 @@ export function OnboardingForm() {
     if (!trimmed) return;
 
     setLoading(true);
-    const result = await createPerson(trimmed);
+    const result = await createUser(trimmed);
     setLoading(false);
 
     if (!result.success) return showUnexpectedErrorToast(t);
 
-    // Automatically redirect to the groups page with useRedirectIfUserIdExists
     toaster.create({
       title: t("home.welcomeBack", { name: trimmed }),
       description: t("home.redirectDescription"),
     });
+
+    router.push(ROUTES.GROUPS);
   };
 
   const handleInputChange = (event) => {
@@ -43,10 +41,6 @@ export function OnboardingForm() {
     setName(value);
     setInvalid(false);
   };
-
-  if (checking) {
-    return <Spinner size="md" />;
-  }
 
   return (
     <form

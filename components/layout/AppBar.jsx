@@ -1,38 +1,21 @@
-"use client";
-
-import { updatePerson } from "@/lib/api/persons";
-import { getUserId } from "@/lib/util/userUtils";
-import { Box, Flex, Heading, Avatar, Spacer, Float } from "@chakra-ui/react";
-import { useTranslations } from "next-intl";
-import { useState } from "react";
-import { FiEdit2 } from "react-icons/fi";
-import { toaster } from "../ui/toaster";
-import { getColorFromString } from "@/lib/util/colorUtils";
-import { OneInputDialog } from "../dialogs/OneInputDialog";
-import { useUser } from "../providers/UserProvider";
-import { showUnexpectedErrorToast } from "@/lib/util/toastUtils";
+import { Box, Flex, Heading, Spacer } from "@chakra-ui/react";
 import { APP_NAME } from "@/lib/constants";
+import { AppBarAvatar } from "./AppBarAvatar";
+import { redirect } from "next/navigation";
+import { ROUTES } from "@/lib/constants";
+import { getTranslations } from "next-intl/server";
+import { getUserCookieHeader } from "@/lib/util/serverApiUtils";
 
-export default function AppBar() {
-  const t = useTranslations();
-  const { user, setUser } = useUser();
-  const [hovering, setHovering] = useState(false);
+export default async function AppBar() {
+  const t = await getTranslations();
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/user`, {
+    headers: await getUserCookieHeader(),
+    cache: "no-store",
+  });
+  if (response.status === 401) redirect(ROUTES.HOME);
+  if (!response.ok) throw new Error(t("common.unexpectedError"));
 
-  const name = user?.name || "";
-
-  const handleSave = async (value) => {
-    const result = await updatePerson(getUserId(), value);
-    if (!result.success) {
-      showUnexpectedErrorToast(t);
-    } else {
-      setUser({ ...user, name: value });
-      toaster.create({
-        title: t("appBar.nameUpdated"),
-        variant: "success",
-      });
-    }
-    return result.success;
-  };
+  const user = await response.json();
 
   return (
     <Box
@@ -50,27 +33,7 @@ export default function AppBar() {
           {APP_NAME}
         </Heading>
         <Spacer />
-        <OneInputDialog
-          title={t("appBar.editYourName")}
-          placeholder={t("appBar.namePlaceholder")}
-          defaultValue={name}
-          onSubmit={handleSave}
-          trigger={
-            <Avatar.Root
-              colorPalette={getColorFromString(name)}
-              size="md"
-              onMouseEnter={() => setHovering(true)}
-              onMouseLeave={() => setHovering(false)}
-            >
-              <Avatar.Fallback name={hovering ? " " : name} />
-              {hovering && (
-                <Float placement="center" offsetX="1" offsetY="1">
-                  <FiEdit2 />
-                </Float>
-              )}
-            </Avatar.Root>
-          }
-        />
+        <AppBarAvatar userName={user?.name} />
       </Flex>
     </Box>
   );
