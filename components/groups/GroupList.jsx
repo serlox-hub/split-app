@@ -37,7 +37,6 @@ export default function GroupList({ groups }) {
               align="center"
               verticalAlign={"center"}
               justify="space-between"
-              mb={2}
               py={3}
               px={4}
             >
