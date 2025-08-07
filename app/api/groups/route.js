@@ -1,67 +1,172 @@
-import { supabaseAdmin } from '@/lib/supabaseServer';
+import { supabaseAdmin } from "@/lib/supabaseServer";
 
 export async function GET(request) {
   const userId = request.headers.get("x-user-id");
 
   if (!userId) {
-    return new Response(JSON.stringify({ error: "Falta userId" }), { status: 400 });
-  }
-
-  const { data: persons, error } = await supabaseAdmin
-    .from("persons")
-    .select("group_id")
-    .eq("user_id", userId);
-
-  if (error) {
-    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
-  }
-
-  const groupIds = [...new Set(persons.map((p) => p.group_id))];
-
-  if (groupIds.length === 0) {
-    return new Response(JSON.stringify([]), { status: 200 });
-  }
-
-  const { data: groups, error: groupError } = await supabaseAdmin
-    .from("groups")
-    .select()
-    .in("id", groupIds);
-
-  if (groupError) {
-    return new Response(JSON.stringify({ error: groupError.message }), { status: 500 });
-  }
-
-  return new Response(JSON.stringify(groups), { status: 200 });
-}
-
-export async function POST(request) {
-  const body = await request.json();
-  const { name, userId } = body;
-
-  if (!name || !userId) {
-    return new Response(JSON.stringify({ error: "Faltan campos: name y userId son requeridos" }), {
+    return new Response(JSON.stringify({ error: "Missing userId" }), {
       status: 400,
     });
   }
 
-  const { data: group, error } = await supabaseAdmin
+  const { data: person, error: personError } = await supabaseAdmin
+    .from("persons")
+    .select("id")
+    .eq("user_id", userId)
+    .single();
+
+  if (personError || !person) {
+    return new Response(
+      JSON.stringify({ error: "No person found for this user id" }),
+      { status: 404 }
+    );
+  }
+
+  // Fetch groups where the person is a member with their members
+  const { data: groups, error: groupsError } = await supabaseAdmin
+    .from("group_members")
+    .select(
+      `
+      group:groups (
+        id,
+        name,
+        created_at,
+        members:group_members (
+          person:persons (
+            id,
+            name
+          )
+        )
+      )
+    `
+    )
+    .eq("person_id", person.id);
+
+  if (groupsError) {
+    return new Response(JSON.stringify({ error: groupsError.message }), {
+      status: 500,
+    });
+  }
+
+  // Plainly format the response to include group details and members
+  const groupList = groups.map((gm) => {
+    const group = gm.group;
+    const members = group.members.map((m) => m.person);
+    return {
+      id: group.id,
+      name: group.name,
+      created_at: group.created_at,
+      members,
+    };
+  });
+
+  return new Response(JSON.stringify(groupList), { status: 200 });
+}
+
+export async function POST(request) {
+  const userId = request.headers.get("x-user-id");
+  const { name } = await request.json();
+
+  if (!userId || !name) {
+    return new Response(
+      JSON.stringify({ error: "Person not found for the given userId" }),
+      { status: 400 }
+    );
+  }
+
+  const { data: person, error: personError } = await supabaseAdmin
+    .from("persons")
+    .select("id")
+    .eq("user_id", userId)
+    .single();
+
+  if (personError || !person) {
+    return new Response(
+      JSON.stringify({ error: "Person not found for the given userId" }),
+      { status: 404 }
+    );
+  }
+
+  // Create the group
+  const { data: group, error: groupError } = await supabaseAdmin
     .from("groups")
-    .insert([{ name }])
+    .insert({ name })
     .select()
     .single();
 
-  if (error) {
-    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+  if (groupError) {
+    return new Response(JSON.stringify({ error: groupError.message }), {
+      status: 500,
+    });
   }
 
-  // Crear una persona asociada al grupo y al userId
-  await supabaseAdmin.from("persons").insert([
-    {
-      name: "Yo", // puedes dejar que lo cambie luego
-      group_id: group.id,
-      user_id: userId,
-    },
-  ]);
+  const { error: memberError } = await supabaseAdmin
+    .from("group_members")
+    .insert({ group_id: group.id, person_id: person.id });
+
+  if (memberError) {
+    return new Response(
+      JSON.stringify({ error: "Group created but failed to assign member" }),
+      { status: 500 }
+    );
+  }
 
   return new Response(JSON.stringify(group), { status: 201 });
+}
+
+export async function DELETE(request, { params }) {
+  const groupId = params?.id;
+  const userId = request.headers.get("x-user-id");
+
+  if (!userId || !groupId) {
+    return new Response(
+      JSON.stringify({ error: "Missing userId or groupId" }),
+      { status: 400 }
+    );
+  }
+
+  const { data: person, error: personError } = await supabaseAdmin
+    .from("persons")
+    .select("id")
+    .eq("user_id", userId)
+    .single();
+
+  if (personError || !person) {
+    return new Response(
+      JSON.stringify({ error: "Person not found for the given userId" }),
+      { status: 404 }
+    );
+  }
+
+  const { count, error: membershipError } = await supabaseAdmin
+    .from("group_members")
+    .select("*", { count: "exact", head: true })
+    .eq("group_id", groupId)
+    .eq("person_id", person.id);
+
+  if (membershipError) {
+    return new Response(JSON.stringify({ error: membershipError.message }), {
+      status: 500,
+    });
+  }
+
+  if (count === 0) {
+    return new Response(
+      JSON.stringify({ error: "You are not a member of this group" }),
+      { status: 403 }
+    );
+  }
+
+  const { error: deleteError } = await supabaseAdmin
+    .from("groups")
+    .delete()
+    .eq("id", groupId);
+
+  if (deleteError) {
+    return new Response(JSON.stringify({ error: deleteError.message }), {
+      status: 500,
+    });
+  }
+
+  return new Response(null, { status: 204 });
 }

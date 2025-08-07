@@ -4,8 +4,12 @@ import { useState } from "react";
 import { Input, Button, Dialog, Portal, useDisclosure } from "@chakra-ui/react";
 import { LuPlus } from "react-icons/lu";
 import { getUserId } from "@/lib/util/userUtils";
+import { createGroup } from "@/lib/api/groups";
+import { showUnexpectedErrorToast } from "@/lib/util/toastUtils";
+import { useTranslations } from "next-intl";
 
 export function CreateGroupBarAction({ onGroupCreated }) {
+  const t = useTranslations();
   const { open, onOpen, onClose } = useDisclosure();
   const [groupName, setGroupName] = useState("");
   const [loading, setLoading] = useState(false);
@@ -16,20 +20,11 @@ export function CreateGroupBarAction({ onGroupCreated }) {
 
     const userId = getUserId();
     setLoading(true);
-    const res = await fetch("/api/groups", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: trimmedName, userId }),
-    });
-
-    if (res.ok) {
-      const group = await res.json();
-      onGroupCreated(group);
-    } else {
-      const err = await res.json();
-      console.error("Error al crear grupo:", err.error);
-    }
+    const result = await createGroup(userId, trimmedName);
     setLoading(false);
+
+    if (!result.success) return showUnexpectedErrorToast(t);
+    onGroupCreated(result.data);
     onClose();
   };
 

@@ -1,39 +1,34 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Box, VStack, Spinner } from "@chakra-ui/react";
+import { Box, VStack } from "@chakra-ui/react";
 
-import { getUserId } from "@/lib/util/userUtils";
 import GroupList from "@/components/groups/GroupList";
 import GroupActions from "@/components/groups/GroupActions";
+import { useUser } from "@/components/providers/UserProvider";
+import { getUserGroups } from "@/lib/api/groups";
+import { showUnexpectedErrorToast } from "@/lib/util/toastUtils";
+import { useTranslations } from "next-intl";
+import { Spinner } from "@/components/Spinner";
 
 export default function GroupsPage() {
+  const t = useTranslations();
+  const { user } = useUser();
   const [loading, setLoading] = useState(true);
   const [groups, setGroups] = useState([]);
+  const userId = user?.user_id ?? null;
 
   useEffect(() => {
-    const storedId = getUserId();
+    if (!userId) return;
 
-    const fetchGroups = (userId) => {
-      // TODO de la otra manera
-      fetch("/api/groups", {
-        headers: {
-          "x-user-id": userId,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (Array.isArray(data)) setGroups(data);
-        })
-        .catch((err) => console.error("Error cargando grupos:", err));
+    const fetchGroups = async () => {
+      const result = await getUserGroups(userId);
+      setLoading(false);
+      if (!result.success) return showUnexpectedErrorToast(t);
+      setGroups(result.data || []);
     };
-
-    if (storedId) {
-      fetchGroups(storedId);
-    }
-
-    setLoading(false);
-  }, []);
+    fetchGroups();
+  }, [t, userId]);
 
   if (loading) {
     return (

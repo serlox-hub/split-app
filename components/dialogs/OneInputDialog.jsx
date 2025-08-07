@@ -19,7 +19,7 @@ export function OneInputDialog({
   leftButtonText,
   rightButtonText,
 }) {
-  const t = useTranslations("common");
+  const t = useTranslations();
   const { open, onOpen, onClose } = useDisclosure();
   const [inputValue, setInputValue] = useState(defaultValue);
   const [loading, setLoading] = useState(false);
@@ -27,13 +27,13 @@ export function OneInputDialog({
 
   const handleSubmit = async () => {
     const trimmedValue = inputValue.trim();
-    setErrorMsg(!trimmedValue ? t("required") : "");
+    setErrorMsg(!trimmedValue ? t("common.required") : "");
     if (!trimmedValue) return;
 
     setLoading(true);
     const success = await onSubmit(trimmedValue);
     if (!success) {
-      setErrorMsg(t("submissionError"));
+      setErrorMsg(t("common.submissionError"));
       return;
     }
     onClose();
@@ -79,7 +79,7 @@ export function OneInputDialog({
             </Dialog.Body>
             <Dialog.Footer>
               <Button size="sm" variant="secondary" onClick={onClose}>
-                {leftButtonText ?? t("cancel")}
+                {leftButtonText ?? t("common.cancel")}
               </Button>
               <Button
                 size="sm"
@@ -87,7 +87,7 @@ export function OneInputDialog({
                 onClick={handleSubmit}
                 disabled={defaultValue === inputValue}
               >
-                {rightButtonText ?? t("submit")}
+                {rightButtonText ?? t("common.submit")}
               </Button>
             </Dialog.Footer>
           </Dialog.Content>

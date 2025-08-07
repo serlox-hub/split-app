@@ -1,13 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { Input, Button, VStack, Spinner, Field } from "@chakra-ui/react";
+import { Input, Button, VStack, Field } from "@chakra-ui/react";
 import { toaster } from "@/components/ui/toaster";
 import { useTranslations } from "next-intl";
 import { useRedirectIfUserIdExists } from "@/hooks/useRedirectIfUserIdExists";
 import { createPerson } from "@/lib/api/persons";
 import { showUnexpectedErrorToast } from "@/lib/util/toastUtils";
 import { ROUTES } from "@/lib/constants";
+import { Spinner } from "@/components/Spinner";
 
 export function OnboardingForm() {
   const [name, setName] = useState("");
@@ -44,7 +45,7 @@ export function OnboardingForm() {
   };
 
   if (checking) {
-    return <Spinner size="md" color={"brand.500"} />;
+    return <Spinner size="md" />;
   }
 
   return (

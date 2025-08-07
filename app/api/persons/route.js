@@ -7,7 +7,7 @@ export async function POST(request) {
 
   if (!name || !userId) {
     return new Response(
-      JSON.stringify({ error: "Faltan campos: name y userId son requeridos" }),
+      JSON.stringify({ error: "Missing fields: name or userId" }),
       {
         status: 400,
       }
@@ -32,7 +32,7 @@ export async function GET(request) {
   const userId = request.headers.get("x-user-id");
 
   if (!userId) {
-    return new Response(JSON.stringify({ error: "Falta el campo userId" }), {
+    return new Response(JSON.stringify({ error: "Missing userId" }), {
       status: 400,
     });
   }
@@ -59,7 +59,7 @@ export async function PUT(request) {
 
   if (!userId || !name) {
     return new Response(
-      JSON.stringify({ error: "Faltan campos: id y name son requeridos" }),
+      JSON.stringify({ error: "Missing fields: userId or name" }),
       {
         status: 400,
       }

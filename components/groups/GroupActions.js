@@ -4,7 +4,7 @@ import { CreateGroupBarAction } from "@/components/actionBar/CreateGroupBarActio
 import { useTranslations } from "next-intl";
 
 export default function GroupActions({ onGroupCreated }) {
-  const t = useTranslations("groups");
+  const t = useTranslations();
 
   return (
     <ActionBar.Root open>
@@ -13,7 +13,7 @@ export default function GroupActions({ onGroupCreated }) {
           <ActionBar.Content>
             <Button variant="outline" size="sm">
               <TbArrowsJoin2 />
-              {t("join")}
+              {t("groups.join")}
             </Button>
             <CreateGroupBarAction onGroupCreated={onGroupCreated} />
           </ActionBar.Content>
