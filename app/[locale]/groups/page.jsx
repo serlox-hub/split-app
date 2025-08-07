@@ -18,15 +18,16 @@ export default function GroupsPage() {
   const [groups, setGroups] = useState([]);
   const userId = user?.user_id ?? null;
 
+  const fetchGroups = async () => {
+    setLoading(true);
+    const result = await getUserGroups(userId);
+    setLoading(false);
+    if (!result.success) return showUnexpectedErrorToast(t);
+    setGroups(result.data || []);
+  };
+
   useEffect(() => {
     if (!userId) return;
-
-    const fetchGroups = async () => {
-      const result = await getUserGroups(userId);
-      setLoading(false);
-      if (!result.success) return showUnexpectedErrorToast(t);
-      setGroups(result.data || []);
-    };
     fetchGroups();
   }, [t, userId]);
 
@@ -48,9 +49,7 @@ export default function GroupsPage() {
       <VStack spacing={6} align="stretch">
         <GroupList groups={groups} />
       </VStack>
-      <GroupActions
-        onGroupCreated={(group) => setGroups((prev) => [...prev, group])}
-      />
+      <GroupActions onGroupCreated={fetchGroups} />
     </Box>
   );
 }
