@@ -26,6 +26,7 @@
     "noGroupsDescription": "Create a group to get started."
   },
   "titles": {
-    "groups": "Your groups"
+    "groups": "Your groups",
+    "group": "Group"
   }
 }

@@ -26,6 +26,7 @@
     "noGroupsDescription": "Crea un grupo para empezar a gestionar tus gastos."
   },
   "titles": {
-    "groups": "Tus grupos"
+    "groups": "Tus grupos",
+    "group": "Grupo"
   }
 }

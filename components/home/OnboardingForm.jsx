@@ -33,7 +33,7 @@ export function OnboardingForm() {
       description: t("home.redirectDescription"),
     });
 
-    router.push(ROUTES.GROUPS.path);
+    router.push(ROUTES.GROUPS.path());
   };
 
   const handleInputChange = (event) => {

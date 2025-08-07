@@ -12,6 +12,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { getColorFromString } from "@/lib/util/colorUtils";
+import { ROUTES } from "@/lib/constants";
 
 export default function GroupList({ groups }) {
   const router = useRouter();
@@ -35,7 +36,7 @@ export default function GroupList({ groups }) {
           <Card.Root
             key={group.id}
             cursor="pointer"
-            onClick={() => router.push(`/${group.id}`)}
+            onClick={() => router.push(ROUTES.GROUP.path(group.id))}
             _hover={{ shadow: "md", bg: "gray.900" }}
             transition="all 0.2s"
           >

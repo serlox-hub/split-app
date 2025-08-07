@@ -12,7 +12,7 @@ export default async function AppBar() {
     headers: await getUserCookieHeader(),
     cache: "no-store",
   });
-  if (response.status === 401) redirect(ROUTES.HOME.path);
+  if (response.status === 401) redirect(ROUTES.HOME.path());
   if (!response.ok) throw new Error(t("common.unexpectedError"));
 
   const user = await response.json();
