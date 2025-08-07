@@ -11,8 +11,8 @@ export function AppBarHeader() {
 
   const getRouteTitle = () => {
     const allRoutes = Object.values(ROUTES);
-    const titleKey = allRoutes.find((route) => route.path === pathname).title;
-    return t(titleKey);
+    const pathConfig = allRoutes.find((route) => route.path === pathname);
+    return pathConfig ? t(pathConfig.title) : null;
   };
 
   const title = getRouteTitle();
