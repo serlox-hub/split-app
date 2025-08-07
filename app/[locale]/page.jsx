@@ -11,7 +11,7 @@ export default async function HomePage() {
     headers: await getUserCookieHeader(),
     cache: "no-store",
   });
-  if (response.status === 200) return redirect(ROUTES.GROUPS);
+  if (response.status === 200) return redirect(ROUTES.GROUPS.path);
 
   return (
     <Box

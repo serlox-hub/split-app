@@ -21,9 +21,11 @@
   },
   "groups": {
     "namePlaceholder": "Enter your name",
-    "yourGroups": "Your groups",
     "join": "Join",
     "noGroups": "No groups found",
     "noGroupsDescription": "Create a group to get started."
+  },
+  "titles": {
+    "groups": "Your groups"
   }
 }

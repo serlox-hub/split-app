@@ -21,9 +21,11 @@
   },
   "groups": {
     "namePlaceholder": "Introduce tu nombre",
-    "yourGroups": "Tus grupos",
     "join": "Unirse",
     "noGroups": "No tienes grupos creados",
     "noGroupsDescription": "Crea un grupo para empezar a gestionar tus gastos."
+  },
+  "titles": {
+    "groups": "Tus grupos"
   }
 }

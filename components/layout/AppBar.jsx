@@ -1,6 +1,6 @@
-import { Box, Flex, Heading, Spacer } from "@chakra-ui/react";
-import { APP_NAME } from "@/lib/constants";
+import { Box, Flex, Spacer } from "@chakra-ui/react";
 import { AppBarAvatar } from "./AppBarAvatar";
+import { AppBarHeader } from "./AppBarHeader";
 import { redirect } from "next/navigation";
 import { ROUTES } from "@/lib/constants";
 import { getTranslations } from "next-intl/server";
@@ -12,7 +12,7 @@ export default async function AppBar() {
     headers: await getUserCookieHeader(),
     cache: "no-store",
   });
-  if (response.status === 401) redirect(ROUTES.HOME);
+  if (response.status === 401) redirect(ROUTES.HOME.path);
   if (!response.ok) throw new Error(t("common.unexpectedError"));
 
   const user = await response.json();
@@ -29,9 +29,7 @@ export default async function AppBar() {
       zIndex="1000"
     >
       <Flex align="center">
-        <Heading color={"blackAlpha.900"} size="xl" fontWeight="bold">
-          {APP_NAME}
-        </Heading>
+        <AppBarHeader />
         <Spacer />
         <AppBarAvatar userName={user?.name} />
       </Flex>
