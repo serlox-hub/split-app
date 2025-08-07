@@ -22,6 +22,8 @@
   "groups": {
     "namePlaceholder": "Enter your name",
     "yourGroups": "Your groups",
-    "join": "Join"
+    "join": "Join",
+    "noGroups": "No groups found",
+    "noGroupsDescription": "Create a group to get started."
   }
 }

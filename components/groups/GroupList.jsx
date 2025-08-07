@@ -7,6 +7,7 @@ import {
   Card,
   Stack,
   Flex,
+  Alert,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -16,15 +17,20 @@ export default function GroupList({ groups }) {
   const router = useRouter();
   const t = useTranslations();
 
-  if (!groups.length) return null;
-
   return (
     <Box>
-      <Heading size="md" mb={4}>
-        {t("groups.yourGroups")}
-      </Heading>
-
       <Stack spacing={4}>
+        {groups.length === 0 && (
+          <Alert.Root status="info" variant="surface">
+            <Alert.Indicator />
+            <Alert.Content>
+              <Alert.Title>{t("groups.noGroups")}</Alert.Title>
+              <Alert.Description>
+                {t("groups.noGroupsDescription")}
+              </Alert.Description>
+            </Alert.Content>
+          </Alert.Root>
+        )}
         {groups.map((group) => (
           <Card.Root
             key={group.id}
