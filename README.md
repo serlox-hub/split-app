@@ -63,6 +63,22 @@ npx supabase db reset
 
 You can edit the schema in supabase/migrations/ or use Supabase Studio.
 
+#### 3.1 Create a database migration
+
+First, create a migration file:
+
+```bash
+npx supabase migration new <migration_name>
+```
+
+Then fill it with schema changes needed.
+
+Finally, push the changes:
+
+```bash
+npx supabase db push
+```
+
 ### 4. Configure Environment Variables
 
 Create a .env.local file based on .env.example:
