@@ -14,7 +14,7 @@ export async function PUT(request) {
   const { data: person, error: personError } = await supabaseAdmin
     .from("persons")
     .select("id")
-    .eq("user_id", userId)
+    .eq("id", userId)
     .single();
 
   if (personError || !person) {
