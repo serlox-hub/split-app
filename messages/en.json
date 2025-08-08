@@ -15,7 +15,7 @@
     "redirectDescription": "You will be redirected to your groups."
   },
   "appBar": {
-    "editName": "Edit name",
+    "editYourName": "Edit your name",
     "namePlaceholder": "Enter your name",
     "nameUpdated": "Name updated successfully"
   },
