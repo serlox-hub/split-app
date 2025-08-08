@@ -83,11 +83,6 @@ npx supabase db push
 
 Create a .env.local file based on .env.example:
 
-```env
-NEXT_PUBLIC_SUPABASE_URL=http://localhost:54321
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-local-anon-key
-```
-
 Get the local anon key by running:
 
 ```bash
@@ -120,6 +115,22 @@ npm start
 ```
 
 The optimized app will be served from the .next folder.
+
+## 🐋 Building with Docker
+
+### For development
+
+```bash
+docker compose -f docker-compose.dev.yml up --build
+```
+
+### For production
+
+Remember to prepare `.env.production` and run:
+
+```bash
+docker compose up --build -d
+```
 
 ## 🚀 Deployment
 
