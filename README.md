@@ -19,7 +19,7 @@ No sign-up, no login, no fuss.
 
 - **Next.js** – React-based framework for building fast web apps
 - **Supabase** – Postgres database with real-time and REST APIs
-- **Tailwind CSS** – For fast and modern UI styling
+- **Chakra UI components** – For fast and modern UI styling
 
 ## 🛠️ Local Development
 
