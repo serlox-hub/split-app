@@ -9,10 +9,15 @@ import {
 } from "@chakra-ui/react";
 import { getColorFromString } from "@/lib/util/colorUtils";
 
-export function GroupCard({ group, onClick }) {
+export function GroupCard({ group, onClick, checked, onCheck }) {
   const handleClick = (event, groupId) => {
     event.stopPropagation();
     if (typeof onClick === "function") onClick(groupId);
+  };
+
+  const handleCheck = (event, groupId) => {
+    event.stopPropagation();
+    if (typeof onCheck === "function") onCheck(groupId);
   };
 
   return (
@@ -50,12 +55,10 @@ export function GroupCard({ group, onClick }) {
         <Checkbox.Root>
           <Checkbox.HiddenInput />
           <Checkbox.Control
+            checked={checked}
             cursor="pointer"
             _hover={{ bg: "gray.700" }}
-            onClick={(e) => {
-              e.stopPropagation();
-              // Handle checkbox click if needed
-            }}
+            onClick={handleCheck}
           />
         </Checkbox.Root>
       </Flex>
