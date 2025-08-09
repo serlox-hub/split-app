@@ -1,13 +1,10 @@
 import { Box, Flex, Spacer } from "@chakra-ui/react";
 import { AppBarAvatar } from "./AppBarAvatar";
 import { AppBarHeader } from "./AppBarHeader";
-import { redirect } from "next/navigation";
-import { ROUTES } from "@/lib/constants";
 import { getCurrentUser } from "@/lib/util/serverApiUtils";
 
 export default async function AppBar() {
   const user = await getCurrentUser();
-  if (!user) redirect(ROUTES.HOME.path());
 
   return (
     <Box

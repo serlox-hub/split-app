@@ -1,14 +1,10 @@
 import { Box, VStack, Heading, Text, Image } from "@chakra-ui/react";
 import { OnboardingForm } from "@/components/home/OnboardingForm";
-import { APP_NAME, ROUTES } from "@/lib/constants";
+import { APP_NAME } from "@/lib/constants";
 import { getTranslations } from "next-intl/server";
-import { redirect } from "next/navigation";
-import { getCurrentUser } from "@/lib/util/serverApiUtils";
 
 export default async function HomePage() {
   const t = await getTranslations();
-  const user = await getCurrentUser();
-  if (user) return redirect(ROUTES.GROUPS.path());
 
   return (
     <Box
