@@ -3,19 +3,11 @@ import { AppBarAvatar } from "./AppBarAvatar";
 import { AppBarHeader } from "./AppBarHeader";
 import { redirect } from "next/navigation";
 import { ROUTES } from "@/lib/constants";
-import { getTranslations } from "next-intl/server";
-import { getUserCookieHeader } from "@/lib/util/serverApiUtils";
+import { getCurrentUser } from "@/lib/util/serverApiUtils";
 
 export default async function AppBar() {
-  const t = await getTranslations();
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/user`, {
-    headers: await getUserCookieHeader(),
-    cache: "no-store",
-  });
-  if (response.status === 401) redirect(ROUTES.HOME.path());
-  if (!response.ok) throw new Error(t("common.unexpectedError"));
-
-  const user = await response.json();
+  const user = await getCurrentUser();
+  if (!user) redirect(ROUTES.HOME.path());
 
   return (
     <Box

@@ -3,15 +3,12 @@ import { OnboardingForm } from "@/components/home/OnboardingForm";
 import { APP_NAME, ROUTES } from "@/lib/constants";
 import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
-import { getUserCookieHeader } from "@/lib/util/serverApiUtils";
+import { getCurrentUser } from "@/lib/util/serverApiUtils";
 
 export default async function HomePage() {
   const t = await getTranslations();
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/user`, {
-    headers: await getUserCookieHeader(),
-    cache: "no-store",
-  });
-  if (response.status === 200) return redirect(ROUTES.GROUPS.path());
+  const user = await getCurrentUser();
+  if (user) return redirect(ROUTES.GROUPS.path());
 
   return (
     <Box
