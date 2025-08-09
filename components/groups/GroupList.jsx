@@ -1,22 +1,16 @@
-import {
-  Box,
-  Heading,
-  Checkbox,
-  AvatarGroup,
-  Avatar,
-  Card,
-  Stack,
-  Flex,
-  Alert,
-} from "@chakra-ui/react";
+import { Box, Stack, Alert } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { getColorFromString } from "@/lib/util/colorUtils";
 import { ROUTES } from "@/lib/constants";
+import { GroupCard } from "@/components/groups/GroupCard";
 
 export default function GroupList({ groups }) {
   const router = useRouter();
   const t = useTranslations();
+
+  const handleGroupClick = (groupId) => {
+    router.push(ROUTES.GROUP.path(groupId));
+  };
 
   return (
     <Box>
@@ -33,50 +27,7 @@ export default function GroupList({ groups }) {
           </Alert.Root>
         )}
         {groups.map((group) => (
-          <Card.Root
-            key={group.id}
-            cursor="pointer"
-            onClick={() => router.push(ROUTES.GROUP.path(group.id))}
-            _hover={{ shadow: "md", bg: "gray.900" }}
-            transition="all 0.2s"
-          >
-            <Flex
-              align="center"
-              verticalAlign={"center"}
-              justify="space-between"
-              py={3}
-              px={4}
-            >
-              <Stack>
-                <Heading size="md">{group.name}</Heading>
-                <Flex justify="space-between" align="center">
-                  {group.members?.length > 0 && (
-                    <AvatarGroup size="xs" stacking="first-on-top">
-                      {group.members.map((member) => (
-                        <Avatar.Root
-                          key={member.id}
-                          colorPalette={getColorFromString(member.name)}
-                        >
-                          <Avatar.Fallback name={member.name} />
-                        </Avatar.Root>
-                      ))}
-                    </AvatarGroup>
-                  )}
-                </Flex>
-              </Stack>
-              <Checkbox.Root>
-                <Checkbox.HiddenInput />
-                <Checkbox.Control
-                  cursor="pointer"
-                  _hover={{ bg: "gray.700" }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    // Handle checkbox click if needed
-                  }}
-                />
-              </Checkbox.Root>
-            </Flex>
-          </Card.Root>
+          <GroupCard key={group.id} group={group} onClick={handleGroupClick} />
         ))}
       </Stack>
     </Box>
