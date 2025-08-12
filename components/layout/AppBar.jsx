@@ -1,7 +1,7 @@
 import { Box, Flex, Spacer } from "@chakra-ui/react";
 import { AppBarAvatar } from "./AppBarAvatar";
 import { AppBarHeader } from "./AppBarHeader";
-import { getCurrentUser } from "@/lib/util/serverApiUtils";
+import { getCurrentUser } from "@/server/user/service";
 
 export default async function AppBar() {
   const user = await getCurrentUser();

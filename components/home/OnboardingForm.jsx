@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Input, Button, VStack, Field } from "@chakra-ui/react";
 import { toaster } from "@/components/ui/toaster";
 import { useTranslations } from "next-intl";
-import { createUser } from "@/lib/api/users";
+import { createUserAction } from "@/server/user/actions";
 import { showUnexpectedErrorToast } from "@/lib/util/toastUtils";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/lib/constants";
@@ -23,7 +23,7 @@ export function OnboardingForm() {
     if (!trimmed) return;
 
     setLoading(true);
-    const result = await createUser(trimmed);
+    const result = await createUserAction(trimmed);
     setLoading(false);
 
     if (!result.success) return showUnexpectedErrorToast(t);

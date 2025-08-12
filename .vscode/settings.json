@@ -42,6 +42,10 @@
     {
       "folderPath": "split-app/app/api/",
       "color": "foldercolorizer.color_0066ff"
+    },
+    {
+      "folderPath": "split-app/server/",
+      "color": "foldercolorizer.color_00cc66"
     }
   ]
 }

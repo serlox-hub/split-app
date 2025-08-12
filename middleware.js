@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
 import createMiddleware from "next-intl/middleware";
 import { routing } from "@/i18n/routing";
-import { getCurrentUser } from "@/lib/util/serverApiUtils";
+import { getCurrentUser } from "@/server/user/service";
 import { ROUTES } from "./lib/constants";
+import { setUserCookie } from "./server/util/cookieUtils";
 
 const intl = createMiddleware(routing);
 const LOCALES = routing.locales;
@@ -23,6 +24,8 @@ export default async function middleware(req) {
   const user = await getCurrentUser();
   const homePath = ROUTES.HOME.path();
   const withoutLocale = pathname.replace(`/${locale}`, "") || homePath;
+
+  if (user) setUserCookie(user.id);
 
   // Rule 1: If there is a user and you are in home → /{locale}/groups
   if (user && withoutLocale === homePath) {

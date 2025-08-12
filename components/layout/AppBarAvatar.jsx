@@ -5,7 +5,7 @@ import { Avatar, Float } from "@chakra-ui/react";
 import { FiEdit2 } from "react-icons/fi";
 import { getColorFromString } from "@/lib/util/colorUtils";
 import { OneInputDialog } from "../dialogs/OneInputDialog";
-import { updateUser } from "@/lib/api/users";
+import { updateUserAction } from "@/server/user/actions";
 import { showUnexpectedErrorToast } from "@/lib/util/toastUtils";
 import { useTranslations } from "next-intl";
 import { toaster } from "../ui/toaster";
@@ -16,7 +16,7 @@ export function AppBarAvatar({ userName }) {
   const [name, setName] = useState(userName);
 
   const handleSave = async (value) => {
-    const result = await updateUser(value);
+    const result = await updateUserAction(value);
     if (!result.success) {
       showUnexpectedErrorToast(t);
     } else {

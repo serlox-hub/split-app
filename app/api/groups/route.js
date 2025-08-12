@@ -1,5 +1,5 @@
 import { supabaseAdmin } from "@/lib/supabaseServer";
-import { getUserCookie } from "@/lib/util/serverApiUtils";
+import { getUserCookie } from "@/server/util/cookieUtils";
 
 export async function GET() {
   const userId = await getUserCookie();
