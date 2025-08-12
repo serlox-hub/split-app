@@ -5,7 +5,7 @@ import { ROUTES } from "@/lib/constants";
 import { GroupCard } from "@/components/groups/GroupCard";
 import { useState } from "react";
 
-export default function GroupList({ groups }) {
+export function GroupList({ groups }) {
   const router = useRouter();
   const t = useTranslations();
   const [selectedGroups, setSelectedGroups] = useState([]);

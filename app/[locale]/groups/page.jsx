@@ -3,8 +3,8 @@
 import { useEffect, useState, useCallback } from "react";
 import { Box, VStack } from "@chakra-ui/react";
 
-import GroupList from "@/components/groups/GroupList";
-import GroupActions from "@/components/groups/GroupActions";
+import { GroupList } from "@/components/groups/GroupList";
+import { GroupActions } from "@/components/groups/GroupActions";
 import { getUserGroups } from "@/lib/api/groups";
 import { showUnexpectedErrorToast } from "@/lib/util/toastUtils";
 import { useTranslations } from "next-intl";

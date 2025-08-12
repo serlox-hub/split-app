@@ -3,7 +3,7 @@ import { TbArrowsJoin2 } from "react-icons/tb";
 import { CreateGroupBarAction } from "@/components/actionBar/CreateGroupBarAction";
 import { useTranslations } from "next-intl";
 
-export default function GroupActions({ onGroupCreated }) {
+export function GroupActions({ onGroupCreated }) {
   const t = useTranslations();
 
   return (
