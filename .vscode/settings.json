@@ -45,7 +45,8 @@
     },
     {
       "folderPath": "split-app/server/",
-      "color": "foldercolorizer.color_00cc66"
+      "color": "foldercolorizer.color_00cc66",
+      "badge": "🌚"
     }
   ]
 }
