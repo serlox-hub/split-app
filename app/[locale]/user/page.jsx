@@ -1,4 +1,6 @@
 import { UserTabEditName } from "@/components/user/UserTabEditName";
+import { UserTabMagicLink } from "@/components/user/UserTabMagicLink";
+
 import { Tabs, Box } from "@chakra-ui/react";
 import { getTranslations } from "next-intl/server";
 
@@ -13,7 +15,7 @@ export default async function UserPage() {
     {
       label: t("userSettings.sessionTab"),
       value: "tab-2",
-      content: "Tab 2: Content coming soon...",
+      content: <UserTabMagicLink />,
     },
   ];
 
@@ -31,18 +33,20 @@ export default async function UserPage() {
       boxShadow="md"
     >
       <Tabs.Root lazyMount unmountOnExit defaultValue="tab-1">
-        <Tabs.List>
+        <Tabs.List justifyContent="center">
           {tabs.map((tab) => (
             <Tabs.Trigger key={tab.value} value={tab.value}>
               {tab.label}
             </Tabs.Trigger>
           ))}
         </Tabs.List>
-        {tabs.map((tab) => (
-          <Tabs.Content key={tab.value} value={tab.value}>
-            {tab.content}
-          </Tabs.Content>
-        ))}
+        <Box size="lg" maxW="md" mx="auto" mt={6}>
+          {tabs.map((tab) => (
+            <Tabs.Content key={tab.value} value={tab.value}>
+              {tab.content}
+            </Tabs.Content>
+          ))}
+        </Box>
       </Tabs.Root>
     </Box>
   );

@@ -52,22 +52,18 @@ export function UserTabEditName() {
   };
 
   return (
-    <Fieldset.Root size="lg" maxW="md" mx="auto" mt={6}>
-      <Fieldset.Content>
-        <Field.Root invalid={!!errorMsg}>
-          <Field.Label>{t("userSettings.editNameLabel")}</Field.Label>
-          <Field.HelperText>
-            {t("userSettings.editNameHelper")}
-          </Field.HelperText>
-          <Input
-            placeholder={t("userSettings.namePlaceholder")}
-            variant={"filled"}
-            value={inputValue}
-            onChange={handleInputChange}
-          />
-          <Field.ErrorText>{errorMsg}</Field.ErrorText>
-        </Field.Root>
-      </Fieldset.Content>
+    <Fieldset.Root>
+      <Field.Root invalid={!!errorMsg}>
+        <Field.Label>{t("userSettings.editNameLabel")}</Field.Label>
+        <Field.HelperText>{t("userSettings.editNameHelper")}</Field.HelperText>
+        <Input
+          placeholder={t("userSettings.namePlaceholder")}
+          variant={"filled"}
+          value={inputValue}
+          onChange={handleInputChange}
+        />
+        <Field.ErrorText>{errorMsg}</Field.ErrorText>
+      </Field.Root>
       <Button
         alignSelf="flex-start"
         size="sm"
