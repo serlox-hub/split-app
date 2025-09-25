@@ -1,4 +1,10 @@
 {
+  "alert": {
+    "info": "Info",
+    "warning": "Warning",
+    "error": "Error",
+    "success": "Success"
+  },
   "common": {
     "submit": "Submit",
     "cancel": "Cancel",
@@ -16,8 +22,10 @@
   },
   "appBar": {
     "editYourName": "Edit your name",
-    "namePlaceholder": "Enter your name",
-    "nameUpdated": "Name updated successfully"
+    "menu": "Menu",
+    "opt_darkTheme": "Use dark theme",
+    "opt_lightTheme": "Use light theme",
+    "opt_userSettings": "User Settings"
   },
   "groups": {
     "namePlaceholder": "Enter your name",
@@ -27,6 +35,15 @@
   },
   "titles": {
     "groups": "Your groups",
-    "group": "Group"
+    "group": "Group",
+    "user": "User Settings"
+  },
+  "userSettings": {
+    "dataTab": "User Data",
+    "editNameLabel": "Username",
+    "editNameHelper": "Edit your username as it will appear to other users.",
+    "namePlaceholder": "Enter your name",
+    "nameUpdated": "Name updated successfully",
+    "sessionTab": "Session"
   }
 }

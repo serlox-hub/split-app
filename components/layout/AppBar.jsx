@@ -1,11 +1,9 @@
 import { Box, Flex, Spacer } from "@chakra-ui/react";
 import { AppBarAvatar } from "./AppBarAvatar";
 import { AppBarHeader } from "./AppBarHeader";
-import { getCurrentUser } from "@/server/user/service";
+import { AppMenuButton } from "./AppMenuButton";
 
-export default async function AppBar() {
-  const user = await getCurrentUser();
-
+export function AppBar() {
   return (
     <Box
       as="header"
@@ -20,7 +18,10 @@ export default async function AppBar() {
       <Flex align="center">
         <AppBarHeader />
         <Spacer />
-        <AppBarAvatar userName={user?.name} />
+        <Flex gap={4}>
+          <AppBarAvatar />
+          <AppMenuButton />
+        </Flex>
       </Flex>
     </Box>
   );

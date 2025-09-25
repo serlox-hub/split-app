@@ -1,4 +1,10 @@
 {
+  "alert": {
+    "info": "Información",
+    "warning": "Advertencia",
+    "error": "Error",
+    "success": "Éxito"
+  },
   "common": {
     "submit": "Enviar",
     "cancel": "Cancelar",
@@ -16,8 +22,10 @@
   },
   "appBar": {
     "editYourName": "Edita tu nombre",
-    "namePlaceholder": "Introduce tu nombre",
-    "nameUpdated": "Nombre actualizado correctamente"
+    "menu": "Menú",
+    "opt_darkTheme": "Usar tema oscuro",
+    "opt_lightTheme": "Usar tema claro",
+    "opt_userSettings": "Configuración de usuario"
   },
   "groups": {
     "namePlaceholder": "Introduce tu nombre",
@@ -27,6 +35,15 @@
   },
   "titles": {
     "groups": "Tus grupos",
-    "group": "Grupo"
+    "group": "Grupo",
+    "user": "Configuración de usuario"
+  },
+  "userSettings": {
+    "dataTab": "Datos del usuario",
+    "editNameLabel": "Nombre de usuario",
+    "editNameHelper": "Edita tu nombre de usuario como aparecerá a otros usuarios.",
+    "namePlaceholder": "Introduce tu nombre",
+    "nameUpdated": "Nombre actualizado correctamente",
+    "sessionTab": "Sesión"
   }
 }
