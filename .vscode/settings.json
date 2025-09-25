@@ -48,5 +48,8 @@
       "color": "foldercolorizer.color_00cc66",
       "badge": "🌚"
     }
-  ]
+  ],
+  "javascript.suggest.autoImports": true,
+  "javascript.preferences.importModuleSpecifier": "non-relative",
+  "javascript.updateImportsOnFileMove.enabled": "always"
 }
