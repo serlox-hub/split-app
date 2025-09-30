@@ -6,6 +6,8 @@
     "success": "Success"
   },
   "common": {
+    "copied": "Copied to clipboard",
+    "copy": "Copy",
     "submit": "Submit",
     "cancel": "Cancel",
     "required": "This field is required",

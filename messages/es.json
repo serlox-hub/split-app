@@ -6,6 +6,8 @@
     "success": "Éxito"
   },
   "common": {
+    "copied": "Copiado al portapapeles",
+    "copy": "Copiar",
     "submit": "Enviar",
     "cancel": "Cancelar",
     "required": "Este campo es obligatorio",
