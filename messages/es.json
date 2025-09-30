@@ -8,8 +8,10 @@
   "common": {
     "copied": "Copiado al portapapeles",
     "copy": "Copiar",
+    "create": "Crear",
     "submit": "Enviar",
     "cancel": "Cancelar",
+    "refresh": "Actualizar",
     "required": "Este campo es obligatorio",
     "submissionError": "Error al enviar. Por favor, inténtalo de nuevo.",
     "unexpectedError": "Un error inesperado ha ocurrido."
@@ -44,6 +46,8 @@
     "dataTab": "Datos del usuario",
     "editNameLabel": "Nombre de usuario",
     "editNameHelper": "Edita tu nombre de usuario como aparecerá a otros usuarios.",
+    "magicLinkTitle": "Enlace mágico",
+    "magicLinkHelper": "Como la aplicación no tiene un sistema de registro/inicio de sesión, puedes crear un enlace mágico para iniciar sesión en tu cuenta desde otro dispositivo. Recuerda que este expirará en {minutes} minutos y solo puede usarse una vez.",
     "namePlaceholder": "Introduce tu nombre",
     "nameUpdated": "Nombre actualizado correctamente",
     "sessionTab": "Sesión"

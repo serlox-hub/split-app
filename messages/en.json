@@ -8,8 +8,10 @@
   "common": {
     "copied": "Copied to clipboard",
     "copy": "Copy",
+    "create": "Create",
     "submit": "Submit",
     "cancel": "Cancel",
+    "refresh": "Refresh",
     "required": "This field is required",
     "submissionError": "Error submitting. Please try again.",
     "unexpectedError": "An unexpected error has occurred."
@@ -44,6 +46,8 @@
     "dataTab": "User Data",
     "editNameLabel": "Username",
     "editNameHelper": "Edit your username as it will appear to other users.",
+    "magicLinkTitle": "Magic Link",
+    "magicLinkHelper": "As the application has no register/login system, you can create a magic link to login your account in another device. Remember that this link will expire in {minutes} minutes and can be used only once.",
     "namePlaceholder": "Enter your name",
     "nameUpdated": "Name updated successfully",
     "sessionTab": "Session"
